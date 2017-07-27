@@ -2,55 +2,55 @@
 # Non-Breaking Space
 snippet nbs
 	&nbsp;
-# ←
+	# ←
 snippet left
 	&#x2190;
-# →
+	# →
 snippet right
 	&#x2192;
-# ↑
+	# ↑
 snippet up
 	&#x2191;
-# ↓
+	# ↓
 snippet down
 	&#x2193;
-# ↩
+	# ↩
 snippet return
 	&#x21A9;
-# ⇤
+	# ⇤
 snippet backtab
 	&#x21E4;
-# ⇥
+	# ⇥
 snippet tab
 	&#x21E5;
-# ⇧
+	# ⇧
 snippet shift
 	&#x21E7;
-# ⌃
+	# ⌃
 snippet ctrl
 	&#x2303;
-# ⌅
+	# ⌅
 snippet enter
 	&#x2305;
-# ⌘
+	# ⌘
 snippet cmd
 	&#x2318;
-# ⌥
+	# ⌥
 snippet option
 	&#x2325;
-# ⌦
+	# ⌦
 snippet delete
 	&#x2326;
-# ⌫
+	# ⌫
 snippet backspace
 	&#x232B;
-# ⎋
+	# ⎋
 snippet esc
 	&#x238B;
-# comment
+	# comment
 snippet //
 	<!-- ${1} -->${0}
-# Generic Doctype
+	# Generic Doctype
 snippet doctype HTML 4.01 Strict
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 	"http://www.w3.org/TR/html4/strict.dtd">
@@ -71,34 +71,34 @@ snippet doctype XHTML 1.0 Transitional
 snippet doctype XHTML 1.1
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-# HTML Doctype 4.01 Strict
+	# HTML Doctype 4.01 Strict
 snippet docts
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 	"http://www.w3.org/TR/html4/strict.dtd">
-# HTML Doctype 4.01 Transitional
+	# HTML Doctype 4.01 Transitional
 snippet doct
 	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 	"http://www.w3.org/TR/html4/loose.dtd">
-# HTML Doctype 5
+	# HTML Doctype 5
 snippet doct5
 	<!DOCTYPE HTML>
-# XHTML Doctype 1.0 Frameset
+	# XHTML Doctype 1.0 Frameset
 snippet docxf
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-# XHTML Doctype 1.0 Strict
+	# XHTML Doctype 1.0 Strict
 snippet docxs
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-# XHTML Doctype 1.0 Transitional
+	# XHTML Doctype 1.0 Transitional
 snippet docxt
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-# XHTML Doctype 1.1
+	# XHTML Doctype 1.1
 snippet docx
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-# Attributes
+	# Attributes
 snippet attr
 	${1:attribute}="${0:property}"
 snippet attr+
@@ -139,7 +139,7 @@ snippet value
 	value="${1}"
 snippet width
 	width="${1}"
-# Elements
+	# Elements
 snippet a
 	<a href="${1:#}">${0:$1}</a>
 snippet a.
@@ -658,7 +658,7 @@ snippet object
 	<object data="${1}" type="${2}">
 		${3}
 	</object>
-# Embed QT Movie
+	# Embed QT Movie
 snippet movie
 	<object width="$2" height="$3" classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
 	codebase="http://www.apple.com/qtactivex/qtplugin.cab">
@@ -877,3 +877,35 @@ snippet wbr
 	<wbr />
 snippet viewport
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+snippet form #structure
+	<div class="${1}">
+		<h1>${2}</h1>
+		<form>
+			$0
+		</form>
+	</div>
+snippet input #form-group
+	<div class="${1:form-group}">
+		<label for="${2:id}">${3}</label>
+		<input type="${4:text}" class="${5}" id="$2" name="${6}">
+	</div>$0
+snippet input #form-group required
+	<div class="${1:form-group}">
+		<label for="${2:id}">${3}</label>
+		<input type="${4:text}" class="${5}" id="$2" name="$2" required #$2="ngModel">
+		<div [hidden]="$2.valid || $2.pristine" class="alert">
+			${7: Este campo es requerido} $0
+		</div>
+	</div>$0
+
+snippet ngmodel
+	[(ngModel)]="${1}"$0
+snippet select #form-group
+	<div class="${1:form-group}">
+		<label for="${2:id}">${3}</label>
+		<select id="$2" name="$2">
+			<option *ngFor="let ${4} of ${5:list}" [value]="$4">$4</option>
+		</select>
+	</div>
+snippet a # routerLink
+	<a routerLink="${1}">${2}</a>

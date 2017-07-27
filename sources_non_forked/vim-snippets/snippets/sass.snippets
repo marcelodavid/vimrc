@@ -1,7 +1,7 @@
 snippet $
 	$${1:variable}: ${0:value}
-snippet imp
-	@import '${0}'
+snippet @import
+	@import '${0}';
 snippet mix
 	=${1:name}(${2})
 		${0}
@@ -9,9 +9,10 @@ snippet inc
 	+${1:mixin}(${2})
 snippet ext
 	@extend ${0}
-snippet fun
-	@function ${1:name}(${2:args})
-		${0}
+snippet @function
+	@function ${1:name}(${2:args}){
+		@return ${0}
+	}
 snippet if
 	@if ${1:condition}
 		${0:${VISUAL}}

@@ -1,0 +1,238 @@
+# Add component
+snippet component
+	import { Component, Input } from '@angular/core';
+
+	@Component({
+		selector: ${1},
+		templateUrl: ${2},
+		styleUrls: [${3}]
+	})
+	export class ${4:App}Component {
+		${5}
+	}
+
+# bootstraping App
+snippet bootstrap
+	import { NgModule } from '@angular/core';
+	import { BrowserModule } from '@angular/platform-browser';
+	import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+	@NgModule({
+		declarations: [${1: /* List of all components */}],
+		imports: [BrowserModule],
+		bootstrap: [${2:AppComponent}]
+	})
+	class ${3:App}Module { }
+
+	platformBrowserDynamic()
+		.bootstrapModule($3Module);
+
+# export class
+snippet export
+	export class ${1} {
+		${2}
+	}
+
+# import FormsModule for ngmodel
+snippet forms
+	import { FormsModule } from '@angular/forms';
+
+# injectable decorator
+snippet injectable
+	import { Injectable } from '@angular/core';
+
+	@Injectable()
+	export class ${1:nameofService} {
+		${2}
+	}
+
+snippet Directive
+	import { Component, Directive, Input, Injectable } from '@angular/core';
+
+	@Directive({
+		selector: '${1:[routerLink]}',
+		host: {
+			'${2:(click)}': '${3:onClick()}'
+		}
+	})
+	export class ${4:RouterLinkStubDirective} {
+		@Input('routerLink') linkParams: any;
+		navigateTo: any = null;
+
+		$3 {
+			this.navigateTo = this.linkParams;
+		}
+	}
+
+# observable
+snippet observable	#module
+	import { Observable } from 'rxjs/Observable';
+snippet observable #instance
+	new Observable(${1:observer} => {
+		${2}
+	});
+snippet observable #change value
+	${1:observer}.next(${2:value});
+snippet observable #finish observable
+
+# http module angular
+snippet http #module
+	import { HttpModule } from '@angular/http';
+snippet http #service
+	import { Http, Response } from '@angular/http';
+	import { Headers, RequestOptions } from '@angular/http';
+	import { Observable } from 'rxjs/Observable';
+	import 'rxjs/add/operator/map';
+	import 'rxjs/add/operator/catch';
+snippet http #get
+	return this.http.get('${1:url}')
+		.map(this.extractData)
+		.catch(this.handleError);
+snippet http #post
+	let headers = new Headers({ 'Content-Type': 'application/json' });
+	let options = new RequestOptions({ headers: headers });
+
+	return this.http.post(${1:'url'}, { ${2:data} }, options)
+		.map(this.extractData)
+		.catch(this.handleError);
+snippet http #extractData
+	private extractData = (resposne: Response) => <${1:castType}>response.json().data;
+snippet http #handleError
+	private handleError = (error: Response | any) => {
+		let errMsg: string;
+		if(error instanceof Response) {
+			const body = error.json() || '';
+			const err = body.error || JSON.stringify(body);
+			errMsg = error.status + " - " + error.statusText || '' + " " + err;
+		} else {
+			errMsg = error.message ? error.message : error.toString();
+		}
+		return Promise.reject(errMsg);
+	}
+
+# Routing module
+snippet RouterModule
+	import { NgModule }	from '@angular/core';
+	import { RouterModule, Routes } from '@angular/router';
+
+	${1}
+
+	const ROUTES: Routes = [
+		{ path: '${2}', redirectTo: '${3}', pathMatch: 'full' },
+		${4:path}
+	];
+
+	@NgModule({
+		imports: [ RouterModule.forRoot(ROUTES) ],
+		exports: [ RouterModule ] // modules has access to RouterLink, RouterOutlet
+	})
+	export class AppRoutingModule {}
+
+snippet path #path
+	{ path: '${1}', component: '${2}'},$0
+
+# test enviroment
+snippet testing
+	import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+	import { By } from '@angular/platform-browser';
+	import { DebugElement } from '@angular/core';
+
+	describe('${1:componentTested}', () => {
+		let component:${2:Component};
+		let fixture: ComponentFixture<$2>;
+		${3}
+		beforeEach(async(() => {
+			TestBed.configureTestingModule({
+				declarations: [$2],
+				imports: [${4:modules}],
+				providers: [${5:services}]
+			}).compileComponents();
+
+
+			fixture = TestBed.createComponent($2);
+			component = fixture.debugElement.componentInstance;
+		}));$0
+
+
+		it('Se debe crear el componente $2', async(() => {
+			expect(component).toBeTruthy();
+		}));
+	});
+
+snippet fixture #instance
+	fixture.debugElement.componentInstance;
+snippet fixture #detectChanges
+	fixture.detectChanges();
+snippet fixture #injector
+	fixture.debugElement.injector.get(${1:service});
+snippet fixture #query
+	fixture.debugElement.query(By.css(${1}));
+snippet fixture #queryAll
+	fixture.debugElement.queryAll(By.css(${1}));
+snippet fixture #whenStable
+	fixture.whenStable().then(() => { // wait for async resolve
+		${1}
+	});
+
+#spy for services
+snippet spy #spying real sevice
+	// Setup spy on the ${1:method} method
+	spy = spyOn(${2:serviceInjected}, $1)
+		.and.returnValue(Promise.resolve($3));
+snippet spy #calls
+	spy.calls.any()
+snippet spy #get spy promise
+	spy.calls.mostRecent().returnValue.then(() => {
+		${1}
+	});
+
+# jasmine test snippets
+snippet describe
+	// suite of tests
+	describe('${1}', () => {
+		${2}
+	});
+snippet describe #async
+	describe('${1}', async(()=>{
+		${2}
+	}));
+snippet beforeEach
+	beforeEach(() => {
+		${1}
+	});
+snippet beforeEach #async
+	beforeEach(async(()=>{
+		${1}
+	}));
+snippet it
+	it('${1}', () => {
+		${2}
+	});
+snippet it #async
+	it('${1}', async(() => {
+		${2}
+	}));
+snippet it #fakeasync
+	it('${1}', fakeAsync(() => {
+		${2}
+	}));
+snippet it #done
+	it('${1}', (done: any) => {
+		${2}
+	});
+snippet expect #toBeDefined
+	expect(${1}).toBeDefined();
+snippet expect #tobe
+	expect(${1}).toBe(${2});
+snippet expect #toEqual
+	expect(${1}).toEqual(${2});
+snippet expect #toContain
+	expect(${1}).toContain(${2});
+snippet expect #toBeLessTha
+	expect(${1}).toBeLessThan(${2});
+snippet expect #toBeGreaterThan
+	expect(${1}).toBeGreaterThan(${2});
+snippet expect #toContain
+	expect(${1}).toContain(${2});
+snippet expect #toBeTruthy
+	expect(${1}).toBeTruthy();
